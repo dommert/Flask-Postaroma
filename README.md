@@ -1,2 +1,2 @@
-# flask-notes
-Flask Notes
+# flask-notepad
+Flask NotePad
