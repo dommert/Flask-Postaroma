@@ -32,4 +32,11 @@ deleteNote(id)
 
 
 
+# Routes
+
+### /note/[id]
+Get, Post-Update, Delete
+
+### /note
+Post
 
