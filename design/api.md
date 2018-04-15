@@ -8,6 +8,9 @@ rid | int, auto increment (row ID)
 id | text, uuid (note id)
 title | text
 description | text / blob
+content | blob
+textData | text
+jsonData | blob
 
 
 
