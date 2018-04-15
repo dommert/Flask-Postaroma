@@ -1,16 +1,16 @@
 # API
 
-### Note Model
+### Notes [Model]
 
 Field Name | Field Type
 ------------ | -------------
-rid | int, auto increment, unique, required (row ID)
-id | text, uuid, unique, key, required (note id)
+rid * | int, auto increment, unique  (row ID)
+id * | text, uuid, unique, key (note id)
 owner | text, userID
-created | datetime
-title | text, required
+created * | datetime
+title * | text
 description | text / blob
-content | blob, required
+content * | blob
 textData | text
 jsonData | blob
 updated | datetime
