@@ -4,13 +4,18 @@
 
 Field Name | Field Type
 ------------ | -------------
-rid | int, auto increment (row ID)
-id | text, uuid (note id)
-title | text
+rid | int, auto increment, unique, required (row ID)
+id | text, uuid, unique, key, required (note id)
+owner | text, userID
+created | datetime
+title | text, required
 description | text / blob
-content | blob
+content | blob, required
 textData | text
 jsonData | blob
+updated | datetime
+deleted | bool
+
 
 
 
