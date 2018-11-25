@@ -25,7 +25,13 @@ def listNote():
 
 
 # Read Note (id)
-
+def readNote(nid):
+    try:
+        note = Note.objects(id=nid)
+        print(note.count())
+        return note
+    except:
+        return errorCode()
 
 # New / Create Note
 
