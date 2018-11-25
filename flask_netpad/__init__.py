@@ -1,10 +1,5 @@
-# Init File
+# Flask-Netpad
+# version 1.0-alpha
 # (C) Abstergo 2018
-# Flask-Notepad v1.0-alpha
+## __init__.py
 
-from flask import Flask
-
-app = Flask(__name__)
-
-if __name__ == '__main__':
-	some_service('localhost',5000,app)

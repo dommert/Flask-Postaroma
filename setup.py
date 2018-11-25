@@ -3,8 +3,8 @@
 from setuptools import setup
 
 setup(
-    name='yourapplication',
-    packages=['yourapplication'],
+    name='flask-netpad',
+    packages=['flask'],
     include_package_data=True,
     install_requires=[
         'flask',
