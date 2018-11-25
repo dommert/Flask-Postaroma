@@ -16,8 +16,16 @@ def errorCode(code=404, msg='Object Not Found :( '):
 
 
 # List Notes
+def listNote():
+    try:
+        note = Note.objects.all()
+        return note
+    except:
+        return errorCode()
+
 
 # Read Note (id)
+
 
 # New / Create Note
 
