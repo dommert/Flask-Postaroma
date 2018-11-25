@@ -34,7 +34,7 @@ def readNote(nid):
         return errorCode()
 
 # New / Create Note
-def newNote(slug, content, title=None, **kwargs)
+def newNote(slug, content, title=None, **kwargs):
     try:
         note = Note(slug=slug, title=title, content=content, fat={**kwargs})
         return note
