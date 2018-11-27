@@ -14,6 +14,9 @@ def errorCode(code=404, msg='Object Not Found :( '):
     error['error'] = msg
     return error
 
+def creatDB():
+    return 'DB Created! (hopefully)'
+
 
 # List Notes
 def listNote():
