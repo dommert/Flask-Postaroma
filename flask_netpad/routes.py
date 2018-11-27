@@ -14,7 +14,7 @@ def index():
     return 'Hello World!'
 
 # Sample
-@app.route('/about)
+@app.route('/about')
 def about_route():
     if request.args.get('var') is None:
         testVar = 'Unknown'
