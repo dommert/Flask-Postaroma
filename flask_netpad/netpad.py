@@ -55,9 +55,9 @@ def pageNote(page=1, per_page=40, **kwargs):
 
 
 # ==  Read Note
-def readNote(**kwargs):
+def readNote(nid):
     try:
-        note = Note.objects(**kwargs)
+        note = Note.objects(id=nid)
         return note
     except:
         return errorCode()
