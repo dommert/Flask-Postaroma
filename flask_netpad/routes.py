@@ -29,7 +29,7 @@ def about_route():
 # ==== Notes Routes =====
 
 # --- List Note
-@app.route('/note/')
+@app.route('/list/note/')
 def listNote_route():
     lim = request.args.get('limit')
     if isinstance(lim, str) != True:
@@ -41,8 +41,12 @@ def listNote_route():
 
 
 # --- Page Note
-@app.route('/page/note/')
+@app.route('/note/')
 def pageNote_route():
+    if request.args.get('page') == 'all':
+        print('listall')
+        note = listNote()
+        return jsonify(note)
 
     if request.args.get('page') is None:
         page = 1
@@ -53,10 +57,8 @@ def pageNote_route():
         pg_limit = 2
     else:
         pg_limit = int(request.args.get('per_page'))
-    print(page,pg_limit)
 
     note = pageNote(page=page, per_page=pg_limit)
-    #return jsonify(per_page=note.per_page, total_pages=note.pages, results=note.total, data=note.items)
     return jsonify(note)
 
 
