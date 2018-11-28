@@ -5,6 +5,7 @@
 
 
 from flask import request, jsonify
+import pprint
 from flask_netpad.app import app
 from flask_netpad.netpad import *
 
@@ -25,25 +26,50 @@ def about_route():
 
 
 
-# -- Notes Routes --
+# ==== Notes Routes =====
 
-# List Note
+# --- List Note
 @app.route('/note/')
 def listNote_route():
     lim = request.args.get('limit')
-    if isinstance(lim, str) == True:
+    if isinstance(lim, str) != True:
         lim = 5
-    note = listNote().limit(lim)
+        print('xx')
+
+    note = listNote()
     return jsonify(note)
 
-# Read Note
+
+# --- Page Note
+@app.route('/page/note/')
+def pageNote_route():
+
+    if request.args.get('page') is None:
+        page = 1
+    else:
+        page = int(request.args.get('page'))
+
+    if request.args.get('per_page') is None:
+        pg_limit = 2
+    else:
+        pg_limit = int(request.args.get('per_page'))
+    print(page,pg_limit)
+
+    note = pageNote(page=page, per_page=pg_limit)
+    #return jsonify(per_page=note.per_page, total_pages=note.pages, results=note.total, data=note.items)
+    return jsonify(note)
+
+
+# --- Read Note
 @app.route('/note/<nid>/')
 def readNote_route(nid):
-    note = readNote(id=nid)
-    #note = Note.objects(slug=nid).first()
+    note = readNote(id=nid).first()
+    print(note)
+    # Need to fix Null
+    print(nid)
     return jsonify(note)
 
-# View Note
+# --- View Note
 
 
 

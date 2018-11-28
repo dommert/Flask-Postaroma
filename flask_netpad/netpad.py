@@ -28,24 +28,40 @@ def createDB(*args, **kwargs):
         errorCode()
 
 # List Notes
-def listNote(page=0, batch=40):
+def listNote():
     try:
-       # note = Note.objects.paginate(page=page, per_page=batch)
-       note = Note.objects
-       return note
-    except:
-        return errorCode()
-
-
-# Read Note (id)
-def readNote(*args, **kwargs):
-    try:
-        note = Note.objects(*args, **kwargs).first()
-        print(note.count())
-
+        note = Note.objects(deleted = False)
         return note
     except:
         return errorCode()
+
+
+# Pagination Note
+def pageNote(page=1, per_page=40):
+    try:
+       note = Note.objects.paginate(page=page, per_page=per_page)
+       d = dict()
+       d['page_current'] = note.page
+       d['page_total'] = note.pages
+       d['per_page'] = note.per_page
+       d['total_items'] = note.total
+       d['data'] = note.items
+       return d
+    except:
+        note = errorCode()
+        return note
+
+
+
+# Read Note
+def readNote(**kwargs):
+    try:
+        note = Note.objects(**kwargs, deleted=False)
+        print(note.count())
+        return note
+    except:
+        return errorCode()
+
 
 # New / Create Note
 def newNote(slug, content, title=None, **kwargs):
@@ -55,6 +71,7 @@ def newNote(slug, content, title=None, **kwargs):
         return note
     except:
         return errorCode(404, 'Note not Created!')
+
 
 # Update Note
 def updateNote(nid, noteData):
