@@ -40,13 +40,13 @@ def listNote():
 def pageNote(page=1, per_page=40):
     try:
        note = Note.objects.paginate(page=page, per_page=per_page)
-       d = dict()
-       d['page_current'] = note.page
-       d['page_total'] = note.pages
-       d['per_page'] = note.per_page
-       d['total_items'] = note.total
-       d['data'] = note.items
-       return d
+       data = dict()
+       data['page_current'] = note.page
+       data['page_total'] = note.pages
+       data['per_page'] = note.per_page
+       data['total_items'] = note.total
+       data['data'] = note.items
+       return data
     except:
         note = errorCode()
         return note
