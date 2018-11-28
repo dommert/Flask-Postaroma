@@ -23,17 +23,16 @@ def errorCode(code=404, msg='Object Not Found :( '):
 
 def createDB(*args, **kwargs):
     try:
-        note = Note(*args,**kwargs)
-        note.STATUS = "Note Created"
-        return note
+        return 'create db'
     except:
         errorCode()
 
 # List Notes
 def listNote(page=0, batch=40):
     try:
-        note = Note.objects.paginate(page=page, per_page=batch)
-        return note
+       # note = Note.objects.paginate(page=page, per_page=batch)
+       note = Note.objects
+       return note
     except:
         return errorCode()
 
@@ -51,6 +50,7 @@ def readNote(*args, **kwargs):
 def newNote(slug, content, title=None, **kwargs):
     try:
         note = Note(slug=slug, title=title, content=content, fat={**kwargs})
+        note.save()
         return note
     except:
         return errorCode(404, 'Note not Created!')

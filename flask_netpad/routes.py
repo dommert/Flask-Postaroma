@@ -33,10 +33,18 @@ def listNote_route():
     lim = request.args.get('limit')
     if isinstance(lim, str) == True:
         lim = 5
-    note= listNote().limit(lim)
+    note = listNote().limit(lim)
+    return jsonify(note)
+
+# Read Note
+@app.route('/note/<nid>/')
+def readNote_route(nid):
+    note = readNote(id=nid).first()
+    #note = Note.objects(slug=nid).first()
     return jsonify(note)
 
 # View Note
+
 
 
 
