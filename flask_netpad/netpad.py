@@ -40,8 +40,9 @@ def listNote(page=0, batch=40):
 # Read Note (id)
 def readNote(*args, **kwargs):
     try:
-        note = Note.objects(*args, **kwargs)
+        note = Note.objects(*args, **kwargs).first()
         print(note.count())
+
         return note
     except:
         return errorCode()

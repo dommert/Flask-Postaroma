@@ -39,7 +39,7 @@ def listNote_route():
 # Read Note
 @app.route('/note/<nid>/')
 def readNote_route(nid):
-    note = readNote(id=nid).first()
+    note = readNote(id=nid)
     #note = Note.objects(slug=nid).first()
     return jsonify(note)
 
