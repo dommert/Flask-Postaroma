@@ -16,30 +16,31 @@ def errorCode(code=404, msg='Object Not Found :( '):
     :param msg: Message to return
     :return: error
     """
-    error = dict()
-    error['code'] = code
-    error['error'] = msg
-    return error
+    data = dict()
+    data['code'] = code
+    data['error'] = msg
+    return data
 
+# ==
 def createDB(*args, **kwargs):
     try:
         return 'create db'
     except:
         errorCode()
 
-# List Notes
-def listNote():
+# ==  List Notes
+def listNote(**kwargs):
     try:
-        note = Note.objects(deleted = False)
+        note = Note.objects(**kwargs)
         return note
     except:
         return errorCode()
 
 
-# Pagination Note
-def pageNote(page=1, per_page=40):
+# == Pagination Note
+def pageNote(page=1, per_page=40, **kwargs):
     try:
-       note = Note.objects.paginate(page=page, per_page=per_page)
+       note = Note.objects(deleted=False).paginate(page=page, per_page=per_page)
        data = dict()
        data['page_current'] = note.page
        data['page_total'] = note.pages
@@ -53,17 +54,16 @@ def pageNote(page=1, per_page=40):
 
 
 
-# Read Note
+# ==  Read Note
 def readNote(**kwargs):
     try:
-        note = Note.objects(**kwargs, deleted=False)
-        print(note.count())
+        note = Note.objects(**kwargs)
         return note
     except:
         return errorCode()
 
 
-# New / Create Note
+# == New / Create Note
 def newNote(slug, content, title=None, **kwargs):
     try:
         note = Note(slug=slug, title=title, content=content, fat={**kwargs})
@@ -91,8 +91,12 @@ def updateNote(nid, noteData):
 def delNote(nid):
     # Soft Delete note
     try:
-        note = Note.objects(_id=nid).first()
+        note = Note.objects(id=nid).update(deleted=True)
+        data = dict()
+        data['total'] = note
+        data['id'] = nid
+        return data
     except:
         return errorCode()
-    return 'deleted'
+
 
