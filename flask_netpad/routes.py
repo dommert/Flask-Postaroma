@@ -42,11 +42,12 @@ def pageNote_route():
         page = int(request.args.get('page'))
 
     if request.args.get('per_page') is None:
-        pg_limit = 2
+        perpage = 2
     else:
-        pg_limit = int(request.args.get('per_page'))
+        perpage = int(request.args.get('per_page'))
 
-    note = pageNote(page=page, per_page=pg_limit)
+    print(page,perpage)
+    note = pageNote(page=page, per_page=perpage)
     return jsonify(note)
 
 
