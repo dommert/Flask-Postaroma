@@ -14,7 +14,7 @@ def index():
     return 'Hello World!'
 
 # Sample
-@app.route('/about)
+@app.route('/about')
 def about_route():
     if request.args.get('var') is None:
         testVar = 'Unknown'
@@ -25,20 +25,52 @@ def about_route():
 
 
 
-# -- Notes Routes --
+# ==== Notes Routes =====
 
-# List Note
+# --- List Note
 @app.route('/note/')
-def listNote_route():
-    lim = request.args.get('limit')
-    if isinstance(lim, str) == True:
-        lim = 5
-    note= listNote().limit(lim)
+def pageNote_route():
+    # If page=all return list
+    if request.args.get('page') == 'all':
+        print('listall')
+        note = listNote(deleted=False)
+        return jsonify(note)
+
+    if request.args.get('page') is None:
+        page = 1
+    else:
+        page = int(request.args.get('page'))
+
+    if request.args.get('per_page') is None:
+        perpage = 2
+    else:
+        perpage = int(request.args.get('per_page'))
+
+    print(page,perpage)
+    note = pageNote(page=page, per_page=perpage)
     return jsonify(note)
 
-# View Note
+
+# --- Read / View Note
+@app.route('/note/<nid>/')
+def readNote_route(nid):
+    #note = readNote(id=nid).first()
+    note = readNote(id=nid)
+    return jsonify(note)
 
 
+# --- List All Note
+@app.route('/list/note/')
+def listNote_route():
+    '''
+    lim = request.args.get('limit')
+    if isinstance(lim, str) != True:
+        lim = 5
+        print('xx')
+    '''
+
+    note = listNote()
+    return jsonify(note)
 
 
 # >>> CATCH ALL <<<
