@@ -11,7 +11,7 @@ db = MongoEngine()
 db.init_app(app)
 
 
-# Note Model
+# Post Model
 class Note(db.DynamicDocument):
     created = db.DateTimeField(default=datetime.datetime.now(), require=True)
     slug = db.StringField(unique=True, require=True)
@@ -48,7 +48,7 @@ def listNote():
 def index():
     return 'Hello World!'
 
-# List Note
+# List Post
 @app.route('/note/')
 def listNote_route():
     lim = request.args.get('limit')

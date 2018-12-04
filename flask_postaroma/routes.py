@@ -5,8 +5,8 @@
 
 
 from flask import request, jsonify
-from flask_netpad.app import app
-from flask_netpad.netpad import *
+from flask_postaroma.app import app
+from flask_postaroma.posts import *
 
 
 @app.route('/')
@@ -27,13 +27,13 @@ def about_route():
 
 # ==== Notes Routes =====
 
-# --- List Note
+# --- List Post
 @app.route('/note/')
 def pageNote_route():
     # If page=all return list
     if request.args.get('page') == 'all':
         print('listall')
-        note = listNote(deleted=False)
+        note = list(deleted=False)
         return jsonify(note)
 
     if request.args.get('page') is None:
@@ -47,19 +47,19 @@ def pageNote_route():
         perpage = int(request.args.get('per_page'))
 
     print(page,perpage)
-    note = pageNote(page=page, per_page=perpage)
+    note = pagePost(page=page, per_page=perpage)
     return jsonify(note)
 
 
-# --- Read / View Note
+# --- Read / View Post
 @app.route('/note/<nid>/')
 def readNote_route(nid):
-    #note = readNote(id=nid).first()
-    note = readNote(id=nid)
+    #note = readPost(id=nid).first()
+    note = readPost(id=nid)
     return jsonify(note)
 
 
-# --- List All Note
+# --- List All Post
 @app.route('/list/note/')
 def listNote_route():
     '''
@@ -69,7 +69,7 @@ def listNote_route():
         print('xx')
     '''
 
-    note = listNote()
+    note = list()
     return jsonify(note)
 
 

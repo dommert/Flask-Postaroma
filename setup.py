@@ -3,10 +3,11 @@
 from setuptools import setup
 
 setup(
-    name='flask-netpad',
+    name='Flask-Postaroma',
     packages=['flask'],
     include_package_data=True,
     install_requires=[
-        'flask', 'flask-mongoengine',
+        'flask',
+        'flask-mongoengine',
     ],
 )
