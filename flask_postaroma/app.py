@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Import Config
 app.config.from_pyfile('app.cfg')
 
-from flask_netpad.routes import *
+from flask_postaroma.routes import *
 
 if __name__ == '__main__':
 	app.run(host=app.config['SERVER_HOST'],

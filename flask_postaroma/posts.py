@@ -1,10 +1,10 @@
 # Flask-Netpad
 # version 1.0-alpha
 # (C) Abstergo 2018
-## netpad.py [MongoDB logic]
+## posts.py [MongoDB logic]
 
 
-from flask_netpad.models import db, Note
+from flask_postaroma.models import db, Post
 
 
 # Custom Error
@@ -29,18 +29,18 @@ def createDB(*args, **kwargs):
         errorCode()
 
 # ==  List Notes
-def listNote(**kwargs):
+def list(**kwargs):
     try:
-        note = Note.objects(**kwargs)
+        note = Post.objects(**kwargs)
         return note
     except:
         return errorCode()
 
 
-# == Pagination Note
-def pageNote(page=1, per_page=40, **kwargs):
+# == Pagination Post
+def pagePost(page=1, per_page=40, **kwargs):
     try:
-       note = Note.objects(deleted=False).paginate(page=page, per_page=per_page)
+       note = Post.objects(deleted=False).paginate(page=page, per_page=per_page)
        data = dict()
        data['page_current'] = note.page
        data['page_total'] = note.pages
@@ -54,46 +54,46 @@ def pageNote(page=1, per_page=40, **kwargs):
 
 
 
-# ==  Read Note
-def readNote(nid):
+# ==  Read Post
+def readPost(nid):
     try:
-        note = Note.objects(id=nid)
+        note = Post.objects(id=nid)
         return note
     except:
         return errorCode()
 
 
-# == New / Create Note
+# == New / Create Post
 def newNote(slug, content, title=None, **kwargs):
     try:
-        note = Note(slug=slug, title=title, content=content, fat={**kwargs})
+        note = Post(slug=slug, title=title, content=content, fat={**kwargs})
         note.save()
         return note
     except:
-        return errorCode(404, 'Note not Created!')
+        return errorCode(404, 'Post not Created!')
 
 
-# Update Note
-def updateNote(nid, noteData):
+# Update Post
+def updatePost(nid, postData):
     try:
         # BlogPost.objects(id=post.id).update(title='Example Post')
-        note=Note.objects(id=nid).get()
-        note.content= noteData.content
-        note.title= noteData.title
-        note.slug= noteData.slug
-        note.save()
-        return note
+        post=Post.objects(id=nid).get()
+        post.content= postData.content
+        post.title= postData.title
+        post.slug= postData.slug
+        post.save()
+        return post
     except:
-        return errorCode(404, 'Note not Found!')
+        return errorCode(404, 'Post not Found!')
 
 
-# Delete / Remove Note
-def delNote(nid):
-    # Soft Delete note
+# Delete / Remove Post
+def delPost(nid):
+    # Soft Delete Post
     try:
-        note = Note.objects(id=nid).update(deleted=True)
+        post = Post.objects(id=nid).update(deleted=True)
         data = dict()
-        data['total'] = note
+        data['total'] = post
         data['id'] = nid
         return data
     except:

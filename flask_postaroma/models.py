@@ -1,4 +1,4 @@
-# Flask-Netpad
+# Flask-Postaroma
 # version 1.0-alpha
 # (C) Abstergo 2018
 ## models.py
@@ -6,7 +6,7 @@
 # Imports
 import datetime
 from flask_mongoengine import MongoEngine, QuerySet
-from flask_netpad.app import app
+from flask_postaroma.app import app
 
 
 
@@ -20,8 +20,8 @@ class DeletedQuery(QuerySet):
     def active(self):
         return self.filter(deleted=False)
 
-# Note Model
-class Note(db.DynamicDocument):
+# Post Model
+class Post(db.DynamicDocument):
     meta = {'queryset_class': DeletedQuery}
     created = db.DateTimeField(default=datetime.datetime.now(), require=True)
     slug = db.StringField(unique=True, require=True)
