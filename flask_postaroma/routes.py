@@ -28,13 +28,13 @@ def about_route():
 # ==== Notes Routes =====
 
 # --- List Post
-@app.route('/note/')
+@app.route('/post/')
 def pageNote_route():
     # If page=all return list
     if request.args.get('page') == 'all':
         print('listall')
-        note = list(deleted=False)
-        return jsonify(note)
+        post = list(deleted=False)
+        return jsonify(post)
 
     if request.args.get('page') is None:
         page = 1
@@ -47,8 +47,8 @@ def pageNote_route():
         perpage = int(request.args.get('per_page'))
 
     print(page,perpage)
-    note = pagePost(page=page, per_page=perpage)
-    return jsonify(note)
+    post = pagePost(page=page, per_page=perpage)
+    return jsonify(post)
 
 
 # --- Read / View Post
