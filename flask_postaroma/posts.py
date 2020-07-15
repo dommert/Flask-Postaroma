@@ -4,7 +4,7 @@
 ## posts.py [MongoDB logic]
 
 
-from flask_postaroma.models import db, Post
+from flask_postaroma.models import db, Post, Blog
 
 
 # Custom Error
@@ -35,6 +35,17 @@ def list(**kwargs):
         return note
     except:
         return errorCode()
+
+
+# == New / Create Post
+def newBlog(slug, blog=None, **kwargs):
+    try:
+        note = Blog(slug=slug, blog=blog, fat={**kwargs})
+        note.save()
+        return note
+    except:
+        return errorCode(404, 'Post not Created!')
+
 
 
 # == Pagination Post
@@ -69,8 +80,8 @@ def newNote(slug, content, title=None, **kwargs):
         note = Post(slug=slug, title=title, content=content, fat={**kwargs})
         note.save()
         return note
-    except:
-        return errorCode(404, 'Post not Created!')
+    except Exception as ex:
+        return errorCode(404, 'Post not Created! {}'.format(ex))
 
 
 # Update Post
@@ -98,5 +109,6 @@ def delPost(nid):
         return data
     except:
         return errorCode()
+
 
 

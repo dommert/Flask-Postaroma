@@ -55,12 +55,16 @@ def pageNote_route():
 @app.route('/note/<nid>/')
 def readNote_route(nid):
     #note = readPost(id=nid).first()
-    note = readPost(id=nid)
+    #note = readPost(slug=nid).first()
+    from flask_postaroma.models import Post
+    note = Post.objects.first()
+
+
     return jsonify(note)
 
 
 # --- List All Post
-@app.route('/list/note/')
+@app.route('/notes')
 def listNote_route():
     '''
     lim = request.args.get('limit')
