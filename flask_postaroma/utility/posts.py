@@ -4,7 +4,7 @@
 ## posts.py [MongoDB logic]
 
 
-from flask_postaroma.models import db, Post
+from flask_postaroma.models import Post
 
 
 # Custom Error
