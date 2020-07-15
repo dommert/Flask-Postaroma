@@ -1,58 +1,95 @@
 # Flask-Netpad
 # version 1.0-alpha
 # (C) Abstergo 2018
-## old_routes.py
+## posts.py [MongoDB logic]
 
 
-from flask import request, jsonify
-from flask_postaroma.app import app
-from flask_postaroma.posts import *
+from flask_postaroma.models import db, Post
 
 
-def index():
-    return 'Hello World!'
+# Custom Error
+
+def errorCode(code=404, msg='Object Not Found :( '):
+    """
+    Returns a custom error code in a dictionary
+    :param code: Error Code
+    :param msg: Message to return
+    :return: error
+    """
+    data = dict()
+    data['code'] = code
+    data['error'] = msg
+    return data
 
 
-# ==== Notes Routes =====
-
-# --- List Post
-def list():
-    # If page=all return list
-    if request.args.get('page') == 'all':
-        print('listall')
-        note = list(deleted=False)
-        return jsonify(note)
-
-    if request.args.get('page') is None:
-        page = 1
-    else:
-        page = int(request.args.get('page'))
-
-    if request.args.get('per_page') is None:
-        perpage = 2
-    else:
-        perpage = int(request.args.get('per_page'))
-
-    print(page, perpage)
-    note = pagePost(page=page, per_page=perpage)
-    return jsonify(note)
+# ==  List Notes
+def list(**kwargs):
+    try:
+        note = Post.objects(**kwargs)
+        return note
+    except:
+        return errorCode()
 
 
-# --- Read / View Post
-def readNote_route(nid):
-    # note = readPost(id=nid).first()
-    note = readPost(id=nid)
-    return jsonify(note)
+# == Pagination Post
+def paginate(page=1, per_page=40, **kwargs):
+    try:
+        note = Post.objects(deleted=False).paginate(page=page, per_page=per_page)
+        data = dict()
+        data['page_current'] = note.page
+        data['page_total'] = note.pages
+        data['per_page'] = note.per_page
+        data['total_items'] = note.total
+        data['data'] = note.items
+        return data
+    except:
+        note = errorCode()
+        return note
 
 
-# --- List All Post
-def listNote_route():
-    '''
-    lim = request.args.get('limit')
-    if isinstance(lim, str) != True:
-        lim = 5
-        print('xx')
-    '''
+# ==  Read Post
+def read(nid):
+    try:
+        note = Post.objects(id=nid)
+        return note
+    except:
+        return errorCode()
 
-    note = list()
-    return jsonify(note)
+
+# == New / Create Post
+def create(slug, content, title=None, **kwargs):
+    try:
+        # note = Post(slug=slug, title=title, content=content, fat={**kwargs})
+        note = Post(slug=slug, title=title, content=content)
+
+        note.save()
+        return note
+    except:
+        return errorCode(404, 'Post not Created!')
+
+
+# Update Post
+def update(nid, postData):
+    try:
+        # BlogPost.objects(id=post.id).update(title='Example Post')
+        post = Post.objects(id=nid).get()
+        post.content = postData.content
+        post.title = postData.title
+        post.slug = postData.slug
+        post.save()
+        return post
+    except:
+        return errorCode(404, 'Post not Found!')
+
+
+# Delete / Remove Post
+def delete(nid):
+    # Soft Delete Post
+    try:
+        post = Post.objects(id=nid).update(deleted=True)
+        data = dict()
+        data['total'] = post
+        data['id'] = nid
+        return data
+    except:
+        return errorCode()
