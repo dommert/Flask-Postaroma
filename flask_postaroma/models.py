@@ -5,7 +5,7 @@
 
 # Imports
 import datetime
-from flask_mongoengine import MongoEngine, QuerySet
+from flask_mongoengine import MongoEngine, QuerySet, Document
 from flask_postaroma.app import app
 
 
@@ -20,14 +20,18 @@ class DeletedQuery(QuerySet):
     def active(self):
         return self.filter(deleted=False)
 
-# Post Model
-class Post(db.DynamicDocument):
-    meta = {'queryset_class': DeletedQuery}
+class MetaData(Document):
+    meta = {'queryset_class': DeletedQuery, 'allow_inheritance': True}
     created = db.DateTimeField(default=datetime.datetime.now(), require=True)
+    author = db.StringField(max_length=60, require=True)
+    deleted = db.BooleanField(default=False)
+
+
+# Post Model
+class Post(Document):
+    meta = {'queryset_class': DeletedQuery, 'allow_inheritance': True}
     slug = db.StringField(unique=True, require=True)
     title = db.StringField(max_length=60)
-    author = db.StringField(max_length=60, require=True)
     content = db.StringField()
-    deleted = db.BooleanField(default=False)
     fat = db.DictField()
 

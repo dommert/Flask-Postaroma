@@ -66,7 +66,9 @@ def readPost(nid):
 # == New / Create Post
 def newNote(slug, content, title=None, **kwargs):
     try:
-        note = Post(slug=slug, title=title, content=content, fat={**kwargs})
+        # note = Post(slug=slug, title=title, content=content, fat={**kwargs})
+        note = Post(slug=slug, title=title, content=content)
+
         note.save()
         return note
     except:

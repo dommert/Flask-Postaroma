@@ -60,7 +60,7 @@ def readNote_route(nid):
 
 
 # --- List All Post
-@app.route('/list/note/')
+@app.route('/notes/')
 def listNote_route():
     '''
     lim = request.args.get('limit')
