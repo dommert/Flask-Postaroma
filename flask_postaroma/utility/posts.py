@@ -33,14 +33,14 @@ def list():
     else:
         perpage = int(request.args.get('per_page'))
 
-    print(page,perpage)
+    print(page, perpage)
     note = pagePost(page=page, per_page=perpage)
     return jsonify(note)
 
 
 # --- Read / View Post
 def readNote_route(nid):
-    #note = readPost(id=nid).first()
+    # note = readPost(id=nid).first()
     note = readPost(id=nid)
     return jsonify(note)
 

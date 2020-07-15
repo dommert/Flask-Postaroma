@@ -21,12 +21,14 @@ def errorCode(code=404, msg='Object Not Found :( '):
     data['error'] = msg
     return data
 
+
 # ==
 def createDB(*args, **kwargs):
     try:
         return 'create db'
     except:
         errorCode()
+
 
 # ==  List Notes
 def list(**kwargs):
@@ -40,18 +42,17 @@ def list(**kwargs):
 # == Pagination Post
 def pagePost(page=1, per_page=40, **kwargs):
     try:
-       note = Post.objects(deleted=False).paginate(page=page, per_page=per_page)
-       data = dict()
-       data['page_current'] = note.page
-       data['page_total'] = note.pages
-       data['per_page'] = note.per_page
-       data['total_items'] = note.total
-       data['data'] = note.items
-       return data
+        note = Post.objects(deleted=False).paginate(page=page, per_page=per_page)
+        data = dict()
+        data['page_current'] = note.page
+        data['page_total'] = note.pages
+        data['per_page'] = note.per_page
+        data['total_items'] = note.total
+        data['data'] = note.items
+        return data
     except:
         note = errorCode()
         return note
-
 
 
 # ==  Read Post
@@ -79,10 +80,10 @@ def newNote(slug, content, title=None, **kwargs):
 def updatePost(nid, postData):
     try:
         # BlogPost.objects(id=post.id).update(title='Example Post')
-        post=Post.objects(id=nid).get()
-        post.content= postData.content
-        post.title= postData.title
-        post.slug= postData.slug
+        post = Post.objects(id=nid).get()
+        post.content = postData.content
+        post.title = postData.title
+        post.slug = postData.slug
         post.save()
         return post
     except:
@@ -100,5 +101,3 @@ def delPost(nid):
         return data
     except:
         return errorCode()
-
-

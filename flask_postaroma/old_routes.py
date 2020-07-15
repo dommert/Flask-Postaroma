@@ -13,6 +13,7 @@ from flask_postaroma.posts import *
 def index():
     return 'Hello World!'
 
+
 # Sample
 @app.route('/about')
 def about_route():
@@ -20,9 +21,8 @@ def about_route():
         testVar = 'Unknown'
     else:
         testVar = request.args.get('var')
-    data = 'About Me '+testVar
+    data = 'About Me ' + testVar
     return data
-
 
 
 # ==== Notes Routes =====
@@ -46,7 +46,7 @@ def pageNote_route():
     else:
         perpage = int(request.args.get('per_page'))
 
-    print(page,perpage)
+    print(page, perpage)
     note = pagePost(page=page, per_page=perpage)
     return jsonify(note)
 
@@ -54,7 +54,7 @@ def pageNote_route():
 # --- Read / View Post
 @app.route('/note/<nid>/')
 def readNote_route(nid):
-    #note = readPost(id=nid).first()
+    # note = readPost(id=nid).first()
     note = readPost(id=nid)
     return jsonify(note)
 
@@ -78,4 +78,3 @@ def listNote_route():
 @app.route('/<path:path>')
 def catch_all(path):
     return 'You wanted path: %s' % path
-
