@@ -1,10 +1,13 @@
 from flask import jsonify
 from flask_restful import Resource
 from flask_postaroma.utility import posts
+
+
+
 ##  To Do CRUD
 
 # Create
-class Crud(Resource):
+class BlogCrud(Resource):
     def get(self, todo_id=None):
         return jsonify(method='get', test="12345", id=todo_id)
 
@@ -21,7 +24,7 @@ class Crud(Resource):
         return jsonify(method='patch', test="12345", id=todo_id)
 
 
-class List(Resource):
+class BlogList(Resource):
     def get(self, todo_id=None):
-        data = posts.list()
-        return jsonify(method="get", test="list dir", data=data)
+        d = posts.listBlog()
+        return jsonify(method="get", test="list dir", data=d)

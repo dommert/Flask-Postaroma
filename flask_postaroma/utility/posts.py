@@ -4,7 +4,7 @@
 ## posts.py [MongoDB logic]
 
 
-from flask_postaroma.models import Post
+from flask_postaroma.models import Post, Blog
 
 
 # Custom Error
@@ -91,5 +91,33 @@ def delete(nid):
         data['total'] = post
         data['id'] = nid
         return data
+    except:
+        return errorCode()
+
+
+
+
+
+
+############
+
+def createBlog(content=None, title=None, **kwargs):
+    try:
+        # note = Post(slug=slug, title=title, content=content, fat={**kwargs})
+        #d = Data(title=title)
+        note = Blog(content=content, title=title)
+        #d.save()
+        note.save()
+        return note
+    except:
+        return errorCode(404, 'Post not Created!')
+
+
+
+# ==  List Notes
+def listBlog(**kwargs):
+    try:
+        blog = Blog.objects(**kwargs)
+        return blog
     except:
         return errorCode()

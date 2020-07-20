@@ -1,7 +1,26 @@
-from flask_postaroma.app import api
-from flask_postaroma.router import todo
+from flask_postaroma.app import api, app
+from flask_postaroma.router import posts
+from flask_postaroma.router.blogs import BlogCrud, BlogList
 
 
-# To Do Example
-api.add_resource(todo.List, '/todos/')
-api.add_resource(todo.Crud,  '/todo/<todo_id>')
+@app.route('/')
+def index():
+    return 'Hello World!'
+
+
+# Post Example
+api.add_resource(posts.List, '/posts/')
+api.add_resource(posts.Crud, '/post/<todo_id>')
+
+
+# Blog
+api.add_resource(BlogList, '/blogs/')
+
+
+
+
+# >>> CATCH ALL <<<
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return 'You wanted path: %s' % path

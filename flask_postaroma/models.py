@@ -19,17 +19,23 @@ class DeletedQuery(QuerySet):
         return self.filter(deleted=False)
 
 
-class MetaData(Document):
-    meta = {'queryset_class': DeletedQuery, 'allow_inheritance': True}
+
+class Page(Document):
+    title = db.StringField(max_length=120)
     created = db.DateTimeField(default=datetime.datetime.now(), require=True)
-    author = db.StringField(max_length=60, require=True)
-    deleted = db.BooleanField(default=False)
+    meta = {'allow_inheritance': True}
+
+class Blog(Page):
+    content = db.StringField()
 
 
 # Post Model
 class Post(Document):
-    meta = {'queryset_class': DeletedQuery, 'allow_inheritance': True}
     slug = db.StringField(unique=True, require=True)
     title = db.StringField(max_length=60)
     content = db.StringField()
     fat = db.DictField()
+    meta = {'queryset_class': DeletedQuery, 'allow_inheritance': True}
+    created = db.DateTimeField(default=datetime.datetime.now(), require=True)
+    author = db.StringField(max_length=60, require=True)
+    deleted = db.BooleanField(default=False)

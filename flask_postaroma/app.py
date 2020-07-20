@@ -14,9 +14,9 @@ api = Api(app)
 app.config.from_pyfile('app.cfg')
 
 # Load Routes
-from flask_postaroma.old_routes import *
-
 from flask_postaroma.routes import *
+
+
 
 if __name__ == '__main__':
     app.run(host=app.config['SERVER_HOST'],
