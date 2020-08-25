@@ -7,7 +7,7 @@ from flask import Flask
 
 app = Flask(__name__)
 # Import Config
-app.config.from_pyfile('app.cfg')
+app.config.from_pyfile('config.cfg')
 
 from flask_postaroma.routes import *
 
