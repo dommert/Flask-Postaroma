@@ -11,7 +11,7 @@ app = Flask(__name__)
 api = Api(app)
 
 # Import Config
-app.config.from_pyfile('app.cfg')
+app.config.from_pyfile('config.cfg')
 
 # Load Routes
 from flask_postaroma.routes import *
