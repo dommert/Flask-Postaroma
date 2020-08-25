@@ -1,3 +1,6 @@
+# Flask-Postaroma
+# version 1.0-alpha
+# (C) Abstergo 2020
 from flask_postaroma.app import api, app
 from flask_postaroma.router import posts
 from flask_postaroma.router.blogs import BlogCrud, BlogList

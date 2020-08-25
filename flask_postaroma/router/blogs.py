@@ -1,3 +1,6 @@
+# Flask-Postaroma
+# version 1.0-alpha
+# (C) Abstergo 2020
 from flask import jsonify
 from flask_restful import Resource
 from flask_postaroma.utility import posts
