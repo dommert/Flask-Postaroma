@@ -13,7 +13,7 @@ def index():
 
 # Post Example
 api.add_resource(posts.List, '/posts/')
-api.add_resource(posts.Crud, '/post/<todo_id>')
+api.add_resource(posts.Crud, '/post/<pid>')
 
 
 # Blog

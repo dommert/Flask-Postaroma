@@ -4,11 +4,14 @@
 ## posts.py [MongoDB logic]
 
 
-from flask_postaroma.models import Post, Blog
+from flask_postaroma.models import Post, Blog, MetaData
 
+
+
+
+# Should this be a CLASS
 
 # Custom Error
-
 def errorCode(code=404, msg='Object Not Found :( '):
     """
     Returns a custom error code in a dictionary
@@ -25,7 +28,8 @@ def errorCode(code=404, msg='Object Not Found :( '):
 # ==  List Notes
 def list(**kwargs):
     try:
-        note = Post.objects(**kwargs)
+        test = Post
+        note = test.objects(**kwargs)
         return note
     except:
         return errorCode()
@@ -50,32 +54,28 @@ def paginate(page=1, per_page=40, **kwargs):
 # ==  Read Post
 def read(nid):
     try:
-        note = Post.objects(id=nid)
+        #note = Post.objects.get(id=nid)
+        note = Post.objects(id=nid).first()
         return note
     except:
         return errorCode()
 
 
 # == New / Create Post
-def create(slug, content, title=None, **kwargs):
+def create(slug, **kwargs):
     try:
-        # note = Post(slug=slug, title=title, content=content, fat={**kwargs})
-        note = Post(slug=slug, title=title, content=content)
-
+        note = Post(slug=slug, **kwargs)
         note.save()
         return note
-    except:
-        return errorCode(404, 'Post not Created!')
+    except Exception as ex:
+        return errorCode(404, str(ex))
 
 
 # Update Post
 def update(nid, postData):
     try:
-        # BlogPost.objects(id=post.id).update(title='Example Post')
-        post = Post.objects(id=nid).get()
-        post.content = postData.content
-        post.title = postData.title
-        post.slug = postData.slug
+
+        post = Post.objects(id=nid).update(**postData)
         post.save()
         return post
     except:
@@ -121,3 +121,4 @@ def listBlog(**kwargs):
         return blog
     except:
         return errorCode()
+
